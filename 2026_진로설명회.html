@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026 진로설명회</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root {
+  --canvas: #FFFFFF;
+  --soft: #FBFBF9;
+  --card: #F6F6F3;
+  --secondary: #E5E5E0;
+  --hairline: #DADAD3;
+  --ink: #000000;
+  --body: #33332E;
+  --mute: #62625B;
+  --ash: #91918C;
+  --dark: #262622;
+  --red: #E60023;
+  --mint: #C7F0DA;
+}
+body { font-family: 'Pretendard', sans-serif; font-weight: 400; color: #33332E; }
+section { background: #FFFFFF; padding: 0; font-family: 'Pretendard', sans-serif; font-weight: 400; color: #33332E; }
+section.hero { background: #FBFBF9; }
+h1, h2, h3, p { margin: 0; }
+
+/* fixed grid for content slides */
+.chap { position: absolute; left: 96px; top: 64px; width: 1728px; font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 20px; line-height: 24px; color: #E60023; white-space: nowrap; }
+.title { position: absolute; left: 96px; top: 100px; width: 1728px; font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 44px; line-height: 56px; letter-spacing: -1px; color: #000000; white-space: nowrap; }
+.sub { position: absolute; left: 96px; top: 168px; width: 1728px; font-family: 'Pretendard', sans-serif; font-weight: 400; font-size: 24px; line-height: 32px; color: #62625B; white-space: nowrap; }
+.rule { position: absolute; left: 96px; top: 224px; width: 1728px; height: 1px; background: #DADAD3; }
+.body { position: absolute; left: 96px; top: 256px; width: 1728px; height: 656px; display: flex; flex-direction: column; gap: 32px; }
+.foot { position: absolute; top: 1008px; font-family: 'Pretendard', sans-serif; font-weight: 400; font-size: 14px; line-height: 20px; color: #62625B; }
+.foot-l { left: 96px; width: 1200px; }
+.foot-r { left: 1424px; width: 400px; text-align: right; }
+
+/* blocks */
+.grow { flex: 1; }
+.cols4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+.cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.card { background: #F6F6F3; border-radius: 16px; padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+.card-title { font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 30px; line-height: 38px; letter-spacing: -0.5px; color: #000000; }
+.txt { font-family: 'Pretendard', sans-serif; font-weight: 400; font-size: 22px; line-height: 34px; color: #33332E; }
+.list { margin: 0; padding-left: 28px; font-family: 'Pretendard', sans-serif; font-weight: 400; font-size: 20px; line-height: 32px; color: #62625B; }
+.tag { align-self: flex-start; background: #FFFFFF; border-radius: 999px; padding: 8px 16px; font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 16px; line-height: 20px; color: #000000; }
+.step-num { font-family: 'Pretendard', sans-serif; font-weight: 800; font-size: 40px; line-height: 44px; color: #62625B; }
+
+.band { background: #262622; border-radius: 16px; padding: 36px 40px; }
+.band-txt { font-family: 'Pretendard', sans-serif; font-weight: 600; font-size: 28px; line-height: 40px; color: #FFFFFF; }
+.hl { color: #E60023; }
+.band .hl { color: #C7F0DA; }
+
+.stat { background: #F6F6F3; border-radius: 16px; padding: 28px 32px; display: flex; flex-direction: column; gap: 8px; }
+.stat-num { font-family: 'Pretendard', sans-serif; font-weight: 800; font-size: 48px; line-height: 56px; letter-spacing: -1px; color: #000000; }
+.stat-num.hl { color: #E60023; }
+.stat-label { font-family: 'Pretendard', sans-serif; font-weight: 600; font-size: 18px; line-height: 26px; color: #62625B; }
+
+.row { display: grid; grid-template-columns: 120px 1fr auto; gap: 32px; align-items: center; padding: 36px 0; border-top: 1px solid #DADAD3; }
+.row-num { width: 72px; height: 72px; border-radius: 36px; background: #262622; text-align: center; font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 26px; line-height: 72px; color: #FFFFFF; }
+.row-title { font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 30px; line-height: 38px; color: #000000; }
+.row-desc { font-family: 'Pretendard', sans-serif; font-weight: 400; font-size: 22px; line-height: 32px; color: #62625B; }
+.row-main { display: flex; flex-direction: column; gap: 8px; }
+.row .tag { align-self: center; background: #F6F6F3; }
+
+.tbl { width: 100%; font-family: 'Pretendard', sans-serif; font-size: 20px; color: #33332E; }
+.tbl th { padding: 14px 20px; text-align: left; font-weight: 700; color: #000000; }
+.tbl td { padding: 14px 20px; text-align: left; }
+.tbl tr.head { background: #F6F6F3; }
+
+/* diagrams: column centers 207 / 645 / 1083 / 1521 match the 4-column grid */
+.diagram { position: relative; width: 1728px; }
+.spec { height: 84px; }
+.spec-bar { position: absolute; left: 0; top: 22px; width: 1728px; height: 12px; border-radius: 999px; background: linear-gradient(90deg, #262622, #E5E5E0); }
+.dot { position: absolute; top: 14px; width: 28px; height: 28px; border-radius: 14px; background: #FFFFFF; border: 4px solid #262622; box-sizing: border-box; }
+.dot.on { background: #E60023; border-color: #E60023; }
+.spec-l { position: absolute; left: 0; top: 56px; width: 400px; font-family: 'Pretendard', sans-serif; font-weight: 600; font-size: 18px; line-height: 24px; color: #62625B; }
+.spec-r { position: absolute; left: 1328px; top: 56px; width: 400px; text-align: right; font-family: 'Pretendard', sans-serif; font-weight: 600; font-size: 18px; line-height: 24px; color: #62625B; }
+.track { height: 76px; }
+.track-line { position: absolute; left: 207px; top: 27px; width: 1314px; height: 2px; background: #DADAD3; }
+.tlab { position: absolute; top: 48px; width: 200px; text-align: center; font-family: 'Pretendard', sans-serif; font-weight: 600; font-size: 18px; line-height: 24px; color: #62625B; }
+.stepper { height: 56px; }
+.snum { position: absolute; top: 0; width: 56px; height: 56px; border-radius: 28px; background: #262622; text-align: center; font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 24px; line-height: 56px; color: #FFFFFF; }
+.flow3 { display: grid; grid-template-columns: 1fr 56px 1fr 56px 1fr; gap: 16px; align-items: center; }
+.flow3 .card { align-self: stretch; }
+.arrow { width: 56px; height: 28px; background: #91918C; }
+.venn-wrap { display: grid; grid-template-columns: 560px 1fr; gap: 64px; align-items: center; }
+.venn { position: relative; width: 560px; height: 300px; }
+.vlab { position: absolute; width: 140px; text-align: center; font-family: 'Pretendard', sans-serif; font-weight: 600; font-size: 20px; line-height: 26px; color: #000000; }
+.vcenter { position: absolute; left: 230px; top: 156px; width: 100px; text-align: center; font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 18px; line-height: 24px; color: #000000; }
+.crit { padding: 18px 0; border-top: 1px solid #DADAD3; display: flex; flex-direction: column; gap: 6px; }
+.crit-title { font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 26px; line-height: 32px; color: #000000; }
+
+/* cover and chapter-divider layout: text left, pin-board collage right */
+.prog { position: absolute; left: 96px; top: 288px; width: 360px; height: 8px; display: flex; gap: 8px; }
+.seg { flex: 1; height: 8px; border-radius: 999px; background: #E5E5E0; }
+.seg.on { background: #000000; }
+.hero-eyebrow { position: absolute; left: 96px; top: 336px; width: 920px; font-family: 'Pretendard', sans-serif; font-weight: 600; font-size: 28px; line-height: 36px; color: #62625B; white-space: nowrap; }
+.hero-eyebrow.on { color: #E60023; }
+.hero-title { position: absolute; left: 96px; top: 392px; width: 920px; font-family: 'Pretendard', sans-serif; font-weight: 800; font-size: 80px; line-height: 92px; letter-spacing: -2px; color: #000000; }
+.hero-sub { position: absolute; left: 96px; top: 624px; width: 920px; font-family: 'Pretendard', sans-serif; font-weight: 400; font-size: 28px; line-height: 40px; color: #62625B; }
+.hero-rule { position: absolute; left: 96px; top: 760px; width: 920px; height: 1px; background: #DADAD3; }
+.meta { position: absolute; left: 96px; top: 792px; width: 920px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+.meta-item { display: flex; flex-direction: column; gap: 8px; }
+.meta-label { font-family: 'Pretendard', sans-serif; font-weight: 600; font-size: 18px; line-height: 24px; color: #62625B; }
+.meta-val { font-family: 'Pretendard', sans-serif; font-weight: 600; font-size: 24px; line-height: 32px; color: #000000; }
+
+.board { position: absolute; left: 1104px; top: 64px; width: 720px; height: 912px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.board-col { display: flex; flex-direction: column; gap: 16px; }
+.tile { border-radius: 32px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; }
+.tile-word { font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 28px; line-height: 34px; letter-spacing: -0.5px; color: #000000; }
+.tile-big { font-family: 'Pretendard', sans-serif; font-weight: 800; font-size: 64px; line-height: 68px; letter-spacing: -2px; color: #000000; }
+.pill { align-self: flex-start; background: #FFFFFF; border-radius: 999px; padding: 8px 14px; font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 16px; line-height: 20px; color: #000000; }
+.t-cream { background: linear-gradient(160deg, #F6F6F3, #E5E5E0); }
+.t-gray { background: #E5E5E0; }
+.t-mint { background: linear-gradient(160deg, #C7F0DA, #E8F8EF); }
+.t-blue { background: linear-gradient(160deg, #DCE2FF, #EEF1FF); }
+.t-lilac { background: linear-gradient(160deg, #EFDDF3, #F8EFFA); }
+.t-dark { background: #262622; }
+.t-red { background: #E60023; }
+.t-dark .tile-word, .t-dark .tile-big, .t-red .tile-word, .t-red .tile-big { color: #FFFFFF; }
+
+/* hero variants */
+section.hero-dark { background: #262622; }
+.hero-dark .hero-title { color: #FFFFFF; }
+.hero-dark .hero-sub { color: #C8C8C1; }
+.hero-dark .hero-rule { background: #4A4A44; }
+.hero-dark .meta-label { color: #91918C; }
+.hero-dark .meta-val { color: #FFFFFF; }
+.hero-dark .seg { background: #4A4A44; }
+.hero-dark .seg.on { background: #FFFFFF; }
+.hero-dark .foot { color: #91918C; }
+.tile-num { font-family: 'Pretendard', sans-serif; font-weight: 800; font-size: 120px; line-height: 120px; letter-spacing: -4px; color: #000000; }
+.tile-desc { margin-top: 12px; font-family: 'Pretendard', sans-serif; font-weight: 400; font-size: 20px; line-height: 30px; color: #33332E; }
+.t-dark .tile-num, .t-dark .tile-desc { color: #FFFFFF; }
+.row4 { position: absolute; left: 96px; top: 440px; width: 1728px; height: 536px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; align-items: end; }
+.stairs { position: absolute; left: 1104px; top: 216px; width: 720px; height: 760px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; align-items: end; }
+.grid22 { position: absolute; left: 96px; top: 120px; width: 816px; height: 856px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.chip-row { position: absolute; left: 96px; top: 656px; width: 1728px; display: flex; justify-content: center; gap: 12px; }
+.chip { background: #E5E5E0; border-radius: 999px; padding: 12px 24px; font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 20px; line-height: 24px; color: #000000; }
+.chip.on { background: #000000; color: #FFFFFF; }
+.contact { position: absolute; left: 96px; top: 744px; width: 1728px; height: 232px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+html,body{margin:0;height:100%;background:#1a1a18;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center}
+#stage>section{position:absolute;inset:0;width:1920px;height:1080px;display:none;overflow:hidden;box-sizing:border-box}
+#stage>section.active{display:block}
+.arrow{clip-path:polygon(0 30%,65% 30%,65% 0,100% 50%,65% 100%,65% 70%,0 70%)}
+#nav{position:fixed;bottom:12px;right:16px;font:14px sans-serif;color:#aaa;user-select:none}
+#nav button{background:#333;color:#fff;border:0;border-radius:6px;padding:6px 12px;margin-left:4px;cursor:pointer}
+@media print{html,body{overflow:visible;background:#fff}#nav{display:none}#stage{position:static;transform:none!important}#stage>section{display:block;position:relative;page-break-after:always}@page{size:1920px 1080px;margin:0}}
+</style></head><body>
+<div id="stage">
+<section id="cover" class="hero">
+<p class="chap">2026 진로설명회</p>
+<p class="hero-eyebrow">용인시기흥장애인복지관</p>
+<h2 class="hero-title">졸업 이후,<br>다음 걸음</h2>
+<p class="hero-sub">우리 아이에게 맞는 진로를 함께 찾고 준비하는 시간</p>
+<div class="hero-rule"></div>
+<div class="meta">
+<div class="meta-item"><p class="meta-label">일시</p><p class="meta-val">2026. [__]. [__]. [__]:00</p></div>
+<div class="meta-item"><p class="meta-label">장소</p><p class="meta-val">복지관 [__층 강당]</p></div>
+<div class="meta-item"><p class="meta-label">대상</p><p class="meta-val">장애 학생 본인과 가족</p></div>
+</div>
+<div class="board">
+<div class="board-col"><div class="tile t-cream" style="height:300px"><div><p class="tile-word">취업</p></div><p class="pill">일하기</p></div><div class="tile t-mint" style="height:260px"><div><p class="tile-word">직업훈련</p></div><p class="pill">배우며 일하기</p></div><div class="tile t-dark" style="height:320px"><div><p class="tile-word">상담부터<br>적응까지</p></div><p class="pill">복지관 지원</p></div></div>
+<div class="board-col"><div class="tile t-red" style="height:160px"><div><p class="tile-word">2026<br>진로설명회</p></div></div><div class="tile t-lilac" style="height:380px"><div><p class="tile-word">주간활동</p></div><p class="pill">낮 시간 활동</p></div><div class="tile t-blue" style="height:340px"><div><p class="tile-word">평생교육</p></div><p class="pill">계속 배우기</p></div></div>
+<div class="board-col"><div class="tile t-gray" style="height:420px"><div><p class="tile-word">본인의 희망<br>현재의 역량<br>가족의 여건</p></div><p class="pill">선택 기준</p></div><div class="tile t-cream" style="height:476px"><div><p class="tile-big">고3</p><p class="tile-word">1학기까지<br>직업평가와<br>기관 견학</p></div><p class="pill">핵심 시기</p></div></div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">01</p>
+</section>
+<section id="agenda">
+<p class="chap">INTRO</p>
+<h2 class="title">오늘의 순서</h2>
+<p class="sub">설명회는 세 부분으로 진행되며, 끝난 뒤 개별 상담이 이어집니다</p>
+<div class="rule"></div>
+<div class="body">
+<div>
+<div class="row"><p class="row-num">01</p><div class="row-main"><h3 class="row-title">졸업 후 진로 경로</h3><p class="row-desc">취업, 직업훈련, 주간활동, 평생교육 네 가지 길을 비교합니다</p></div><p class="tag">[__]분</p></div>
+<div class="row"><p class="row-num">02</p><div class="row-main"><h3 class="row-title">복지관 진로 지원 프로그램</h3><p class="row-desc">상담·평가부터 취업 후 적응까지, 단계별 지원과 준비 시기를 안내합니다</p></div><p class="tag">[__]분</p></div>
+<div class="row"><p class="row-num">03</p><div class="row-main"><h3 class="row-title">신청 및 상담 안내</h3><p class="row-desc">상담 신청 절차와 문의처를 알려 드립니다</p></div><p class="tag">[__]분</p></div>
+</div>
+<div class="band"><p class="band-txt">설명회가 끝나면 <span class="hl">개별 상담 테이블</span>이 운영됩니다. 궁금한 점은 그 자리에서 바로 물어보세요.</p></div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">02</p>
+</section>
+<section id="ch1" class="hero">
+<p class="chap">CHAPTER 01</p>
+<div class="prog" style="top:128px"><div class="seg on"></div><div class="seg"></div><div class="seg"></div></div>
+<p class="hero-eyebrow on" style="top:168px">01</p>
+<h2 class="hero-title" style="top:216px; width:1728px">졸업 후 진로 경로</h2>
+<p class="hero-sub" style="top:328px; width:1728px">학교를 마친 뒤 선택할 수 있는 길과, 나에게 맞는 길을 고르는 기준</p>
+<div class="row4">
+<div class="tile t-cream" style="height:536px"><div><p class="tile-num">01</p><p class="tile-word">취업</p><p class="tile-desc">일반 사업체나 공공기관에<br>고용되어 일합니다</p></div><p class="pill">일하기</p></div><div class="tile t-mint" style="height:470px"><div><p class="tile-num">02</p><p class="tile-word">직업훈련</p><p class="tile-desc">기술과 태도를 익히며<br>일합니다</p></div><p class="pill">배우며 일하기</p></div><div class="tile t-blue" style="height:500px"><div><p class="tile-num">03</p><p class="tile-word">주간활동</p><p class="tile-desc">지역사회에서 의미 있는<br>낮 활동을 합니다</p></div><p class="pill">낮 시간 활동</p></div><div class="tile t-lilac" style="height:430px"><div><p class="tile-num">04</p><p class="tile-word">평생교육</p><p class="tile-desc">졸업 뒤에도 배움을<br>이어 갑니다</p></div><p class="pill">계속 배우기</p></div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">03</p>
+</section>
+<section id="paths">
+<p class="chap">01 졸업 후 진로 경로</p>
+<h2 class="title">졸업 후 선택할 수 있는 네 가지 길</h2>
+<p class="sub">본인의 희망과 강점, 필요한 지원의 정도에 따라 고릅니다</p>
+<div class="rule"></div>
+<div class="body">
+<div class="diagram spec">
+<div class="spec-bar"></div>
+<div class="dot" style="left:193px"></div>
+<div class="dot" style="left:631px"></div>
+<div class="dot" style="left:1069px"></div>
+<div class="dot" style="left:1507px"></div>
+<p class="spec-l">일 중심</p>
+<p class="spec-r">생활·배움 중심</p>
+</div>
+<div class="cols4 grow">
+<div class="card"><p class="tag">일하기</p><h3 class="card-title">취업</h3><p class="txt">일반 사업체나 공공기관에 고용되어 일합니다.</p><ul class="list"><li>일반 고용</li><li>지원고용(현장 훈련 후 취업)</li><li>장애인 표준사업장</li></ul></div>
+<div class="card"><p class="tag">배우며 일하기</p><h3 class="card-title">직업훈련</h3><p class="txt">일에 필요한 기술과 태도를 익히며 일합니다.</p><ul class="list"><li>장애인 보호작업장</li><li>장애인 근로사업장</li><li>직업재활 프로그램</li></ul></div>
+<div class="card"><p class="tag">낮 시간 활동</p><h3 class="card-title">주간활동</h3><p class="txt">낮 시간에 지역사회에서 의미 있는 활동을 합니다.</p><ul class="list"><li>발달장애인 주간활동서비스</li><li>주간보호시설</li><li>여가·체육 활동</li></ul></div>
+<div class="card"><p class="tag">계속 배우기</p><h3 class="card-title">평생교육</h3><p class="txt">학교를 마친 뒤에도 배움을 이어 갑니다.</p><ul class="list"><li>장애인 평생교육시설</li><li>평생학습 프로그램</li><li>자립생활 교육</li></ul></div>
+</div>
+<div class="band"><p class="band-txt">정답은 하나가 아닙니다. 지금 고른 길도 <span class="hl">준비 정도에 따라 바꿀 수 있습니다.</span></p></div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">04</p>
+</section>
+<section id="compare">
+<p class="chap">01 졸업 후 진로 경로</p>
+<h2 class="title">나에게 맞는 길, 이렇게 비교해 보세요</h2>
+<p class="sub">경로별로 맞는 대상, 미리 준비할 것, 문의처를 정리했습니다</p>
+<div class="rule"></div>
+<div class="body">
+<table class="tbl">
+<tr class="head"><th style="width:14%">경로</th><th style="width:34%">이런 분께 맞아요</th><th style="width:28%">미리 준비할 것</th><th style="width:24%">문의처</th></tr>
+<tr><td>취업</td><td>정해진 시간 동안 혼자 또는 약간의 도움으로 일할 수 있는 분</td><td>직업평가, 출퇴근 연습, 이력서</td><td>한국장애인고용공단, 복지관</td></tr>
+<tr><td>직업훈련</td><td>일 경험을 쌓으며 기술을 익히고 싶은 분</td><td>직업평가, 기관 견학</td><td>보호작업장, 복지관</td></tr>
+<tr><td>주간활동</td><td>낮 시간 활동과 사회 참여가 먼저 필요한 분</td><td>서비스 신청, 제공기관 견학</td><td>행정복지센터, 제공기관</td></tr>
+<tr><td>평생교육</td><td>배움과 여가로 자립 역량을 키우고 싶은 분</td><td>프로그램 일정 확인, 신청</td><td>평생교육시설, 복지관</td></tr>
+</table>
+<div class="venn-wrap grow">
+<div class="venn">
+<svg width="560" height="300" viewBox="0 0 560 300" aria-label="본인의 희망, 현재의 역량, 가족의 여건 세 원이 겹치는 가운데가 맞는 길"><circle cx="215" cy="110" r="95" fill="#C7F0DA" fill-opacity="0.75"/><circle cx="345" cy="110" r="95" fill="#DCE2FF" fill-opacity="0.75"/><circle cx="280" cy="195" r="95" fill="#EFDDF3" fill-opacity="0.75"/><circle cx="280" cy="140" r="9" fill="#E60023"/></svg>
+<p class="vlab" style="left:95px; top:72px">본인의 희망</p>
+<p class="vlab" style="left:325px; top:72px">현재의 역량</p>
+<p class="vlab" style="left:210px; top:238px">가족의 여건</p>
+<p class="vcenter">맞는 길</p>
+</div>
+<div>
+<div class="crit"><h3 class="crit-title">본인의 희망</h3><p class="txt">무엇을 하고 싶은지, 어디서 하루를 보내고 싶은지 먼저 묻습니다.</p></div>
+<div class="crit"><h3 class="crit-title">현재의 역량</h3><p class="txt">직업평가로 지금 할 수 있는 일과 필요한 지원을 확인합니다.</p></div>
+<div class="crit"><h3 class="crit-title">가족의 여건</h3><p class="txt">통학·출퇴근 지원 등 가족이 함께할 수 있는 범위를 봅니다.</p></div>
+</div>
+</div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">05</p>
+</section>
+<section id="ch2" class="hero hero-dark">
+<p class="chap">CHAPTER 02</p>
+<div class="prog" style=""><div class="seg"></div><div class="seg on"></div><div class="seg"></div></div>
+<p class="hero-eyebrow on">02</p>
+<h2 class="hero-title">복지관 진로 지원<br>프로그램</h2>
+<p class="hero-sub">상담부터 취업 후 적응까지, 복지관이 함께하는 단계와 준비 시기</p>
+<div class="hero-rule"></div>
+<div class="meta" style="">
+<div class="meta-item"><p class="meta-label">이 장에서 다루는 내용</p><p class="meta-val">세 단계 지원 프로그램</p></div>
+<div class="meta-item"><p class="meta-label">&#160;</p><p class="meta-val">지난해 운영 현황</p></div>
+<div class="meta-item"><p class="meta-label">&#160;</p><p class="meta-val">학년별 준비 타임라인</p></div>
+</div>
+<div class="stairs">
+<div class="tile t-mint" style="height:360px"><div><p class="tile-num">1</p><p class="tile-word">직업상담<br>평가</p></div><p class="pill">STEP 1</p></div><div class="tile t-blue" style="height:560px"><div><p class="tile-num">2</p><p class="tile-word">직업훈련<br>체험</p></div><p class="pill">STEP 2</p></div><div class="tile t-lilac" style="height:760px"><div><p class="tile-num">3</p><p class="tile-word">취업 연계<br>사후관리</p><p class="tile-desc">취업한 뒤에도<br>일터 적응을<br>곁에서 돕습니다</p></div><p class="pill">STEP 3</p></div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">06</p>
+</section>
+<section id="programs">
+<p class="chap">02 복지관 진로 지원 프로그램</p>
+<h2 class="title">복지관이 함께하는 세 단계 지원</h2>
+<p class="sub">상담과 평가로 시작해 훈련, 취업 연계, 적응 지원까지 이어집니다</p>
+<div class="rule"></div>
+<div class="body">
+<div class="flow3 grow">
+<div class="card"><p class="tag">STEP 1</p><h3 class="card-title">직업상담·평가</h3><p class="txt">흥미와 강점, 생활 기술을 살펴 진로 방향을 함께 정합니다.</p><ul class="list"><li>초기 상담과 가족 면담</li><li>직업능력 평가</li><li>개인별 진로 계획 수립</li></ul></div>
+<div class="arrow"></div>
+<div class="card"><p class="tag">STEP 2</p><h3 class="card-title">직업훈련·체험</h3><p class="txt">실제 일터와 비슷한 환경에서 일하는 힘을 기릅니다.</p><ul class="list"><li>작업 기초 훈련</li><li>사업체 현장 견학·체험</li><li>대중교통 이용 훈련</li></ul></div>
+<div class="arrow"></div>
+<div class="card"><p class="tag">STEP 3</p><h3 class="card-title">취업 연계·사후관리</h3><p class="txt">취업한 뒤에도 일터에 잘 적응하도록 곁에서 돕습니다.</p><ul class="list"><li>구인처 발굴과 취업 알선</li><li>현장 적응 지원</li><li>정기 방문 상담</li></ul></div>
+</div>
+<div class="cols3">
+<div class="stat"><p class="stat-num">[__]명</p><p class="stat-label">2025년 진로상담 참여 인원</p></div>
+<div class="stat"><p class="stat-num">[__]곳</p><p class="stat-label">협력 사업체·기관</p></div>
+<div class="stat"><p class="stat-num">[__]명</p><p class="stat-label">2025년 취업 연계 인원</p></div>
+</div>
+</div>
+<p class="foot foot-l">자료: 용인시기흥장애인복지관 [담당 부서] 2025년 실적</p>
+<p class="foot foot-r">07</p>
+</section>
+<section id="timeline">
+<p class="chap">02 복지관 진로 지원 프로그램</p>
+<h2 class="title">학년별 진로 준비 타임라인</h2>
+<p class="sub">졸업 2~3년 전부터 차근차근 준비하면 선택지가 넓어집니다</p>
+<div class="rule"></div>
+<div class="body">
+<div class="diagram track">
+<div class="track-line"></div>
+<div class="dot" style="left:193px"></div>
+<div class="dot" style="left:631px"></div>
+<div class="dot on" style="left:1069px"></div>
+<div class="dot" style="left:1507px"></div>
+<p class="tlab" style="left:107px">졸업 3년 전</p>
+<p class="tlab" style="left:545px">졸업 2년 전</p>
+<p class="tlab" style="left:983px">졸업 1년 전 · 핵심 시기</p>
+<p class="tlab" style="left:1421px">졸업 후</p>
+</div>
+<div class="cols4 grow">
+<div class="card"><p class="tag">고등학교 1학년</p><h3 class="card-title">탐색</h3><p class="txt">좋아하는 일과 잘하는 일을 찾아봅니다.</p><ul class="list"><li>진로 흥미 검사</li><li>가족과 진로 대화</li><li>설명회 참석</li></ul></div>
+<div class="card"><p class="tag">고등학교 2학년</p><h3 class="card-title">체험</h3><p class="txt">여러 일터와 기관을 직접 경험합니다.</p><ul class="list"><li>기관·사업체 견학</li><li>현장 체험 프로그램</li><li>생활 기술 연습</li></ul></div>
+<div class="card"><p class="tag">고등학교 3학년·전공과</p><h3 class="card-title">평가·결정</h3><p class="txt">평가 결과를 바탕으로 진로를 정합니다.</p><ul class="list"><li>직업능력 평가</li><li>이용 기관 상담·신청</li><li>졸업 후 일과 계획</li></ul></div>
+<div class="card"><p class="tag">졸업 후</p><h3 class="card-title">연계·적응</h3><p class="txt">새 일터와 기관에 자리 잡도록 돕습니다.</p><ul class="list"><li>서비스 이용 시작</li><li>적응 지원 상담</li><li>필요하면 경로 재조정</li></ul></div>
+</div>
+<div class="band"><p class="band-txt"><b>고3 1학기까지</b> 직업평가와 기관 견학을 마치면, 졸업 전에 다음 자리를 정하기가 훨씬 수월합니다.</p></div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">08</p>
+</section>
+<section id="ch3" class="hero">
+<p class="chap">CHAPTER 03</p>
+<div class="grid22">
+<div class="tile t-dark" style=""><div><p class="tile-num">1</p><p class="tile-word">전화 문의</p></div><p class="pill">대표 전화</p></div><div class="tile t-mint" style=""><div><p class="tile-num">2</p><p class="tile-word">초기 상담</p></div><p class="pill">본인·가족</p></div><div class="tile t-blue" style=""><div><p class="tile-num">3</p><p class="tile-word">직업능력 평가</p></div><p class="pill">강점 확인</p></div><div class="tile t-cream" style=""><div><p class="tile-num">4</p><p class="tile-word">서비스 연계</p></div><p class="pill">맞춤 연결</p></div>
+</div>
+<div class="prog" style="left:1008px; width:360px"><div class="seg"></div><div class="seg"></div><div class="seg on"></div></div>
+<p class="hero-eyebrow on" style="left:1008px; width:816px">03</p>
+<h2 class="hero-title" style="left:1008px; width:816px">신청 및<br>상담 안내</h2>
+<p class="hero-sub" style="left:1008px; width:816px">첫 문의부터 서비스 연결까지, 어떻게 진행되는지 알려 드립니다</p>
+<div class="hero-rule" style="left:1008px; width:816px"></div>
+<div class="meta" style="left:1008px; width:816px">
+<div class="meta-item"><p class="meta-label">이 장에서 다루는 내용</p><p class="meta-val">상담 신청 네 단계</p></div>
+<div class="meta-item"><p class="meta-label">&#160;</p><p class="meta-val">문의 전화와 담당자</p></div>
+<div class="meta-item"><p class="meta-label">&#160;</p><p class="meta-val">운영 시간</p></div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">09</p>
+</section>
+<section id="process">
+<p class="chap">03 신청 및 상담 안내</p>
+<h2 class="title">상담 신청은 이렇게 진행됩니다</h2>
+<p class="sub">첫 문의부터 서비스 연결까지 약 [__]주가 걸립니다</p>
+<div class="rule"></div>
+<div class="body">
+<div class="diagram stepper">
+<div class="track-line"></div>
+<p class="snum" style="left:179px">1</p>
+<p class="snum" style="left:617px">2</p>
+<p class="snum" style="left:1055px">3</p>
+<p class="snum" style="left:1493px">4</p>
+</div>
+<div class="cols4 grow">
+<div class="card"><h3 class="card-title">전화 문의</h3><p class="txt">대표 전화로 상담을 신청하고 방문 날짜를 정합니다.</p></div>
+<div class="card"><h3 class="card-title">초기 상담</h3><p class="txt">본인과 가족을 만나 희망 진로와 생활 상황을 듣습니다.</p></div>
+<div class="card"><h3 class="card-title">직업능력 평가</h3><p class="txt">작업 능력과 필요한 지원을 확인합니다.</p></div>
+<div class="card"><h3 class="card-title">서비스 연계</h3><p class="txt">평가 결과에 맞는 프로그램이나 기관으로 연결합니다.</p></div>
+</div>
+<div class="cols3">
+<div class="stat"><p class="stat-label">문의 전화</p><p class="stat-num hl">031-[___]-[____]</p></div>
+<div class="stat"><p class="stat-label">담당 부서</p><p class="stat-num">[부서명]</p></div>
+<div class="stat"><p class="stat-label">운영 시간</p><p class="stat-num">평일 [__]–[__]시</p></div>
+</div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">10</p>
+</section>
+<section id="closing" class="hero">
+<p class="chap">2026 진로설명회</p>
+<p class="hero-eyebrow" style="left:96px; width:1728px; text-align:center; top:240px">감사합니다</p>
+<h2 class="hero-title" style="left:96px; width:1728px; text-align:center; top:296px; font-size:96px; line-height:108px">함께 고민하고,<br>함께 준비하겠습니다</h2>
+<p class="hero-sub" style="left:96px; width:1728px; text-align:center; top:548px">진로 상담은 설명회 이후에도 언제든 신청하실 수 있습니다</p>
+<div class="chip-row"><p class="chip">취업</p><p class="chip">직업훈련</p><p class="chip">주간활동</p><p class="chip">평생교육</p><p class="chip on">진로 상담</p></div>
+<div class="contact">
+<div class="tile t-red" style=""><div><p class="tile-word">031-[___]-[____]</p></div><p class="pill">문의 전화</p></div><div class="tile t-mint" style=""><div><p class="tile-word">[부서명]</p></div><p class="pill">담당 부서</p></div><div class="tile t-blue" style=""><div><p class="tile-word">평일 [__]–[__]시</p></div><p class="pill">운영 시간</p></div>
+</div>
+<p class="foot foot-l">용인시기흥장애인복지관 · 2026 진로설명회</p>
+<p class="foot foot-r">11</p>
+</section>
+
+</div>
+<div id="nav"><span id="cnt"></span><button onclick="go(-1)">◀</button><button onclick="go(1)">▶</button><button onclick="fs()">전체화면</button></div>
+<script>
+const S=[...document.querySelectorAll('#stage>section')];let i=0;
+function show(){S.forEach((s,k)=>s.classList.toggle('active',k===i));document.getElementById('cnt').textContent=(i+1)+' / '+S.length;}
+function go(n){i=Math.max(0,Math.min(S.length-1,i+n));show();}
+function fit(){const k=Math.min(innerWidth/1920,innerHeight/1080);document.getElementById('stage').style.transform=`translate(-50%,-50%) scale(${k})`;}
+function fs(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' ','Enter'].includes(e.key))go(1);if(['ArrowLeft','PageUp','Backspace'].includes(e.key))go(-1);if(e.key==='f')fs();});
+document.getElementById('stage').addEventListener('click',()=>go(1));
+addEventListener('resize',fit);fit();show();
+</script></body></html>
